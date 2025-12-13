@@ -36,7 +36,7 @@ class TestGruppoService(unittest.TestCase):
 
     def test_crea_gruppo_successo(self):
         fake_group = MagicMock(listaUtenti=set(), amministratori=set())
-        fake_group.id = "g123"   # ID fisso per il group mock
+        fake_group.id = "g123"  
         self.mock_gruppo_class.return_value = fake_group
 
         fake_user = MagicMock(gruppi=set())
@@ -49,8 +49,7 @@ class TestGruppoService(unittest.TestCase):
         self.assertIn("u1", fake_group.listaUtenti)
         self.assertIn("u1", fake_group.amministratori)
 
-        # Dopo la creazione il gruppo deve essere assegnato all’utente
-        self.assertIn("g123", fake_user.gruppi)
+        self.assertIn("g123", fake_user.gruppi)       
 
         self.mock_salva.assert_called_once()
 

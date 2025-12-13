@@ -37,8 +37,8 @@ class MaterialeController:
         )
 
     # LISTA MATERIALI DI UN GRUPPO
-    def materiali_gruppo(self, id_gruppo: str) -> List[Materiale]:
-        return self.service.materiali_gruppo(id_gruppo)
+    def lista_materiali_gruppo(self, id_gruppo: str) -> List[Materiale]:
+        return self.service.lista_materiali_gruppo(id_gruppo)
 
     # OTTIENI MATERIALE SPECIFICO
     def get_materiale(self, id_materiale: str) -> Optional[Materiale]:

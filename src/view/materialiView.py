@@ -66,7 +66,7 @@ class MaterialiView(QWidget):
 
         self.lista_materiali.clear()
 
-        materiali = self.materiale_ctrl.materiali_gruppo(self.gruppo_attuale.id)
+        materiali = self.materiale_ctrl.lista_materiali_gruppo(self.gruppo_attuale.id)
 
         for m in materiali:
             autore = self.utente_ctrl.repo_utenti.get_by_id(m.autore)

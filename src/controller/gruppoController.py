@@ -27,14 +27,13 @@ class GruppoController:
     def elimina_gruppo(self, id_gruppo: str, id_admin: str) -> bool:
         return self.service.elimina_gruppo(id_gruppo, id_admin)
 
-    # AGGIUNGI UTENTE
-    def aggiungi_utente(self, id_gruppo: str, id_admin: str, id_utente: str) -> bool:
-        return self.service.aggiungi_utente(id_gruppo, id_admin, id_utente)
+    # AGGIUNGI MEMBRO
+    def aggiungi_membro(self, id_gruppo: str, id_admin: str, id_membro: str) -> bool:
+        return self.service.aggiungi_membro(id_gruppo, id_admin, id_membro)
 
-    # RIMUOVI UTENTE
-    def rimuovi_utente(self, id_gruppo: str, id_admin: str, id_utente: str) -> bool:
-        return self.service.rimuovi_utente(id_gruppo, id_admin, id_utente)
-
+    # RIMUOVI MEMBRO
+    def rimuovi_membro(self, id_gruppo: str, id_admin: str, id_membro: str) -> bool:
+        return self.service.rimuovi_membro(id_gruppo, id_admin, id_membro)
     # NOMINA ADMIN
     def nomina_admin(self, id_gruppo: str, id_admin: str, id_utente: str) -> bool:
         return self.service.nomina_admin(id_gruppo, id_admin, id_utente)

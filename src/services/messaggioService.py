@@ -30,7 +30,7 @@ class ServizioMessaggio:
         if not gruppo:
             return False
 
-        if id_mittente not in gruppo.membri:
+        if id_mittente not in gruppo.listaUtenti:
             return False  
 
         id_messaggio = str(uuid.uuid4())

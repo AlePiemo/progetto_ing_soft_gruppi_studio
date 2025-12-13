@@ -174,7 +174,7 @@ class GruppiView(QWidget):
 
         u = self.utente_ctrl.get_utente_attivo()
 
-        if self.gruppo_ctrl.aggiungi_utente(gruppo.id, u.id, id_utente):
+        if self.gruppo_ctrl.aggiungi_membro(gruppo.id, u.id, id_utente):
             QMessageBox.information(self, "OK", "Utente aggiunto.")
             self.mostra_dettagli_gruppo(self.lista_gruppi.currentItem())
         else:
@@ -192,7 +192,7 @@ class GruppiView(QWidget):
 
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if self.gruppo_ctrl.rimuovi_utente(gruppo.id, admin.id, id_utente):
+        if self.gruppo_ctrl.rimuovi_membro(gruppo.id, admin.id, id_utente):
             QMessageBox.information(self, "OK", "Utente rimosso.")
             self.mostra_dettagli_gruppo(self.lista_gruppi.currentItem())
         else:

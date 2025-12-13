@@ -28,7 +28,7 @@ class ChatService:
             return False
 
         # deve essere membro del gruppo
-        if id_mittente not in gruppo.membri:
+        if id_mittente not in gruppo.listaUtenti:
             return False
 
         id_messaggio = int(uuid.uuid4())
@@ -74,7 +74,7 @@ class ChatService:
                 if gruppo:
                     for id_msg in gruppo.messaggi:
                         msg = self.repo_messaggi.get_by_id(id_msg)
-                        if msg and msg.mittente_id != id_utente and not msg.letto:
+                        if msg and msg.mittente != id_utente and not msg.letto:
                             tutti.append(msg)
 
         tutti.sort(key=lambda x: x.timestamp)

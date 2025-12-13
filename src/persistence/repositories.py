@@ -43,16 +43,16 @@ class GruppoRepository:
         self._ds = datastore
 
     def add(self, gruppo: Gruppo) -> None:
-        self._ds.gruppi[gruppo.id] = gruppo
+        self._ds.groups[gruppo.id] = gruppo
 
     def get_by_id(self, gruppo_id: str) -> Optional[Gruppo]:
-        return self._ds.gruppi.get(gruppo_id)
+        return self._ds.groups.get(gruppo_id)
     
     def get_all(self) -> List[Gruppo]:
-        return list(self._ds.gruppi.values())
+        return list(self._ds.groups.values())
 
     def remove(self, gruppo_id: str) -> None:
-        self._ds.gruppi.pop(gruppo_id, None)
+        self._ds.groups.pop(gruppo_id, None)
 
 #  Messaggio REPOSITORY
 class MessaggioRepository:
@@ -60,19 +60,19 @@ class MessaggioRepository:
         self._ds = datastore
 
     def add(self, messaggio: Messaggio) -> None:
-        self._ds.messaggi[messaggio.id] = messaggio
+        self._ds.messages[messaggio.id] = messaggio
 
     def get_by_id(self, messaggio_id: str) -> Optional[Messaggio]:
-        return self._ds.messaggi.get(messaggio_id)
+        return self._ds.messages.get(messaggio_id)
 
     def get_all(self) -> List[Messaggio]:
-        return list(self._ds.messaggi.values())
+        return list(self._ds.messages.values())
 
     def remove(self, messaggio_id: str) -> None:
-        self._ds.messaggi.pop(messaggio_id, None)
+        self._ds.messages.pop(messaggio_id, None)
 
     def get_by_group(self, gruppo_id: str) -> List[Messaggio]:
-        return [m for m in self._ds.messaggi.values() if m.destinatario_id == gruppo_id]
+        return [m for m in self._ds.messages.values() if m.destinatario_id == gruppo_id]
 
 #  Incontro REPOSITORY
 class IncontroRepository:
@@ -80,19 +80,19 @@ class IncontroRepository:
         self._ds = datastore
 
     def add(self, incontro: Incontro) -> None:
-        self._ds.incontri[incontro.id] = incontro
+        self._ds.meetings[incontro.id] = incontro
 
     def get_by_id(self, incontro_id: str) -> Optional[Incontro]:
-        return self._ds.incontri.get(incontro_id)
+        return self._ds.meetings.get(incontro_id)
 
     def get_all(self) -> List[Incontro]:
-        return list(self._ds.incontri.values())
+        return list(self._ds.meetings.values())
 
     def remove(self, incontro_id: str) -> None:
-        self._ds.incontri.pop(incontro_id, None)
+        self._ds.meetings.pop(incontro_id, None)
 
     def get_by_group(self, gruppo_id: str) -> List[Incontro]:
-        return [m for m in self._ds.incontri.values() if m.gruppo_id == gruppo_id]
+        return [m for m in self._ds.meetings.values() if m.gruppo_id == gruppo_id]
 
 #  Materiale REPOSITORY
 class MaterialeRepository:
@@ -100,19 +100,19 @@ class MaterialeRepository:
         self._ds = datastore
 
     def add(self, material: Materiale) -> None:
-        self._ds.materiali[material.id] = material
+        self._ds.materials[material.id] = material
 
     def get_by_id(self, material_id: str) -> Optional[Materiale]:
-        return self._ds.materiali.get(material_id)
+        return self._ds.materials.get(material_id)
 
     def get_all(self) -> List[Materiale]:
-        return list(self._ds.materiali.values())
+        return list(self._ds.materials.values())
 
     def remove(self, material_id: str) -> None:
-        self._ds.materiali.pop(material_id, None)
+        self._ds.materials.pop(material_id, None)
 
     def get_by_group(self, gruppo_id: str) -> List[Materiale]:
-        return [m for m in self._ds.materiali.values() if m.gruppo_id == gruppo_id]
+        return [m for m in self._ds.materials.values() if m.gruppo_id == gruppo_id]
 
 #  Segnalazione REPOSITORY
 class SegnalazioneRepository:
@@ -120,19 +120,19 @@ class SegnalazioneRepository:
         self._ds = datastore
 
     def add(self, segnalazione: Segnalazione) -> None:
-        self._ds.segnalazioni[segnalazione.id] = segnalazione
+        self._ds.reports[segnalazione.id] = segnalazione
 
     def get_by_id(self, segnalazione_id: str) -> Optional[Segnalazione]:
-        return self._ds.segnalazioni.get(segnalazione_id)
+        return self._ds.reports.get(segnalazione_id)
 
     def get_all(self) -> List[Segnalazione]:
-        return list(self._ds.segnalazioni.values())
+        return list(self._ds.reports.values())
 
     def remove(self, segnalazione_id: str) -> None:
-        self._ds.segnalazioni.pop(segnalazione_id, None)
+        self._ds.reports.pop(segnalazione_id, None)
 
     def get_by_status(self, status) -> List[Segnalazione]:
-        return [r for r in self._ds.segnalazioni.values() if r.stato == status]
+        return [r for r in self._ds.reports.values() if r.stato == status]
 
 #  Notifica REPOSITORY
 class NotificaRepository:
@@ -140,19 +140,19 @@ class NotificaRepository:
         self._ds = datastore
 
     def add(self, notifica: Notifica) -> None:
-        self._ds.notifiche[notifica.id] = notifica
+        self._ds.notifications[notifica.id] = notifica
 
     def get_by_id(self, notifica_id: str) -> Optional[Notifica]:
-        return self._ds.notifiche.get(notifica_id)
+        return self._ds.notifications.get(notifica_id)
 
     def get_all(self) -> List[Notifica]:
-        return list(self._ds.notifiche.values())
+        return list(self._ds.notifications.values())
 
     def remove(self, notifica_id: str) -> None:
-        self._ds.notifiche.pop(notifica_id, None)
+        self._ds.notifications.pop(notifica_id, None)
 
     def get_by_user(self, user_id: str) -> List[Notifica]:
-        return [n for n in self._ds.notifiche.values() if n.destinatario_id == user_id]
+        return [n for n in self._ds.notifications.values() if n.destinatario_id == user_id]
 
 #  BACKUP REPOSITORY
 class BackupRepository:
