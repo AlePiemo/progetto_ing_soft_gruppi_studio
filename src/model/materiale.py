@@ -3,10 +3,10 @@ from datetime import datetime
 
 @dataclass
 class Materiale:
-    id: int
+    id: str
     titolo: str
     contenuto: str
-    autore: int          
+    autore: str          
     nome_file: str          
     dimensione: int         # in byte
     path_file: str          # percorso sul filesystem

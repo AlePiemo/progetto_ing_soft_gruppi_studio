@@ -8,7 +8,7 @@ class BackupStatus(Enum):
 
 @dataclass
 class Backup:
-    id: int
+    id: str
     dataBackup: datetime
     esito: bool            
 

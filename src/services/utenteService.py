@@ -17,7 +17,7 @@ class UtenteService:
     # REGISTRAZIONE UTENTE (RF1)
     def registra_utente(
         self,
-        id: int,
+        id: str,
         nome: str,
         cognome: str,
         email: str,
@@ -62,7 +62,7 @@ class UtenteService:
     def admin_crea_utente(
         self,
         admin: Utente,
-        id: int,
+        id: str,
         nome: str,
         cognome: str,
         email: str,
@@ -91,7 +91,7 @@ class UtenteService:
     def admin_modifica_utente(
         self,
         admin: Utente,
-        id: int,
+        id: str,
         **dati
     ) -> bool:
 
@@ -110,7 +110,7 @@ class UtenteService:
         return True
 
     # admin: ELIMINA UTENTE (RF4)
-    def admin_elimina_utente(self, admin: Utente, id: int) -> bool:
+    def admin_elimina_utente(self, admin: Utente, id: str) -> bool:
         if admin.ruoloPiattaforma != RolePlatform.ADMIN_PIATTAFORMA:
             return False
 

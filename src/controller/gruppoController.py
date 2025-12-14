@@ -28,19 +28,44 @@ class GruppoController:
         return self.service.elimina_gruppo(id_gruppo, id_admin)
 
     # AGGIUNGI MEMBRO
-    def aggiungi_membro(self, id_gruppo: str, id_admin: str, id_membro: str) -> bool:
-        return self.service.aggiungi_membro(id_gruppo, id_admin, id_membro)
+    def aggiungi_membro(self, id_gruppo: str, id_admin: str, email_membro: str) -> bool:
+        email_membro = (email_membro or "").strip().lower()
+        if not email_membro:
+            return False
+        ut = self.repo_utenti.find_by_email(email_membro)
+        if not ut:
+            return False
+        return self.service.aggiungi_membro(id_gruppo, id_admin, ut.id)
 
     # RIMUOVI MEMBRO
-    def rimuovi_membro(self, id_gruppo: str, id_admin: str, id_membro: str) -> bool:
-        return self.service.rimuovi_membro(id_gruppo, id_admin, id_membro)
+    def rimuovi_membro(self, id_gruppo: str, id_admin: str, email_membro: str) -> bool:
+        email_membro = (email_membro or "").strip().lower()
+        if not email_membro:
+            return False    
+        ut = self.repo_utenti.find_by_email(email_membro)
+        if not ut:
+            return False
+        return self.service.rimuovi_membro(id_gruppo, id_admin, ut.id)
+
     # NOMINA ADMIN
-    def nomina_admin(self, id_gruppo: str, id_admin: str, id_utente: str) -> bool:
-        return self.service.nomina_admin(id_gruppo, id_admin, id_utente)
+    def nomina_admin(self, id_gruppo: str, id_admin: str, email_utente: str) -> bool:
+        email_utente = (email_utente or "").strip().lower()
+        if not email_utente:
+            return False
+        ut = self.repo_utenti.find_by_email(email_utente)
+        if not ut:
+            return False
+        return self.service.nomina_admin(id_gruppo, id_admin, ut.id)
 
     # REVOCA ADMIN
-    def revoca_admin(self, id_gruppo: str, id_admin: str, id_utente: str) -> bool:
-        return self.service.revoca_admin(id_gruppo, id_admin, id_utente)
+    def revoca_admin(self, id_gruppo: str, id_admin: str, email_utente: str) -> bool:
+        email_utente = (email_utente or "").strip().lower()
+        if not email_utente:
+            return False    
+        ut = self.repo_utenti.find_by_email(email_utente)
+        if not ut:
+            return False
+        return self.service.revoca_admin(id_gruppo, id_admin, ut.id)
 
     # LISTA GRUPPI
     def lista_gruppi(self) -> List[Gruppo]:

@@ -27,7 +27,8 @@ class MainWindow(QMainWindow):
         calendario_ctrl,
         segnalazione_ctrl,
         notifica_ctrl,
-        backup_ctrl
+        backup_ctrl,
+        on_logout=None
     ):
         super().__init__()
 
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
         self.segnalazione_ctrl = segnalazione_ctrl
         self.notifica_ctrl = notifica_ctrl
         self.backup_ctrl = backup_ctrl
+        self.on_logout = on_logout
 
         # Memorizza il gruppo selezionato da GruppiView
         self.gruppo_selezionato = None
@@ -162,5 +164,8 @@ class MainWindow(QMainWindow):
         self.stacked.setCurrentWidget(self.view_backup)
 
     def logout(self):
-        self.utente_ctrl.logout()
-        self.close()
+        if callable(self.on_logout):
+            self.on_logout()
+        else:
+            self.utente_ctrl.logout_current_user()
+            self.close()

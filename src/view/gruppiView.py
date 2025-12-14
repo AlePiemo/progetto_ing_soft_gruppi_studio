@@ -168,14 +168,17 @@ class GruppiView(QWidget):
         if not gruppo:
             return
 
-        id_utente, ok = QInputDialog.getText(self, "Aggiungi utente", "utente da aggiungere:")
-        if not ok or not id_utente:
+        email, ok = QInputDialog.getText(self, "Aggiungi utente", "mail utente da aggiungere:")
+        if not ok or not email:
             return
 
         u = self.utente_ctrl.get_utente_attivo()
 
-        if self.gruppo_ctrl.aggiungi_membro(gruppo.id, u.id, id_utente):
+        if self.gruppo_ctrl.aggiungi_membro(gruppo.id, u.id, email):
             QMessageBox.information(self, "OK", "Utente aggiunto.")
+            item = self.lista_gruppi.currentItem()
+            if item is None:
+                return
             self.mostra_dettagli_gruppo(self.lista_gruppi.currentItem())
         else:
             QMessageBox.warning(self, "Errore", "Impossibile aggiungere utente.")
@@ -186,13 +189,13 @@ class GruppiView(QWidget):
         if not gruppo:
             return
 
-        id_utente, ok = QInputDialog.getText(self, "Rimuovi utente", "utente da rimuovere:")
-        if not ok or not id_utente:
+        email, ok = QInputDialog.getText(self, "Rimuovi utente", "mail utente da rimuovere:")
+        if not ok or not email:
             return
 
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if self.gruppo_ctrl.rimuovi_membro(gruppo.id, admin.id, id_utente):
+        if self.gruppo_ctrl.rimuovi_membro(gruppo.id, admin.id, email):
             QMessageBox.information(self, "OK", "Utente rimosso.")
             self.mostra_dettagli_gruppo(self.lista_gruppi.currentItem())
         else:
@@ -204,13 +207,13 @@ class GruppiView(QWidget):
         if not gruppo:
             return
 
-        id_utente, ok = QInputDialog.getText(self, "Promuovi admin", "utente da promuovere:")
-        if not ok or not id_utente:
+        email, ok = QInputDialog.getText(self, "Promuovi admin", "mail utente da promuovere:")
+        if not ok or not email:
             return
 
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if self.gruppo_ctrl.nomina_admin(gruppo.id, admin.id, id_utente):
+        if self.gruppo_ctrl.nomina_admin(gruppo.id, admin.id, email):
             QMessageBox.information(self, "OK", "Utente promosso admin.")
             self.mostra_dettagli_gruppo(self.lista_gruppi.currentItem())
         else:

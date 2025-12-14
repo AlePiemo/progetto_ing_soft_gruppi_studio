@@ -11,7 +11,7 @@ class RolePlatform(Enum):
 
 @dataclass
 class Utente:
-    id: int
+    id: str
     nome: str
     cognome: str
     email: str

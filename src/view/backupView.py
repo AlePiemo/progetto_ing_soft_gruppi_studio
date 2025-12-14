@@ -57,7 +57,11 @@ class BackupView(QWidget):
             self.lista_backup.addItem(item)
 
     def backup_manuale(self):
-        backup = self.backup_ctrl.backup_manuale()
+        try:
+            backup = self.backup_ctrl.backup_manuale()
+        except PermissionError:
+            QMessageBox.warning(self, "Non autorizzato", "Solo l'amministratore di piattaforma può eseguire backup.")
+            return
 
         if backup.esito:
             QMessageBox.information(self, "Backup", "Backup completato con successo!")

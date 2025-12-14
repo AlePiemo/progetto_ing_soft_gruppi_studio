@@ -9,12 +9,12 @@ class IncontroStatus(Enum):
 
 @dataclass
 class Incontro:
-    id: int
+    id: str
     titolo: str
     descrizione: str
     dataIncontro: datetime 
     oraIncontro: datetime
-    gruppo_id: int  
+    gruppo_id: str  
 
     statoIncontro: IncontroStatus = IncontroStatus.PROGRAMMATO
 

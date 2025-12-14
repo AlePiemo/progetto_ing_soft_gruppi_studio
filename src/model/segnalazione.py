@@ -9,7 +9,7 @@ class StatoSegnalazione(Enum):
 
 @dataclass
 class Segnalazione:
-    id: int
+    id: str
     motivo: str
     autore: int         
     destinatario: int        # utente o messaggio segnalato 

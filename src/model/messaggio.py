@@ -3,8 +3,8 @@ from datetime import datetime
 
 @dataclass
 class Messaggio:
-    id: int
-    mittente: int 
+    id: str
+    mittente: str 
     testo: str
     data: datetime = field(default_factory=datetime.now)
 

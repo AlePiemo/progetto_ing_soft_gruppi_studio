@@ -23,7 +23,7 @@ class ServizioMessaggio:
 
     # INVIA MESSAGGIO DI GRUPPO 
     def invia_messaggio_gruppo(
-        self, id_gruppo: int, id_mittente: int, testo: str
+        self, id_gruppo: str, id_mittente: str, testo: str
     ) -> bool:
 
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
@@ -52,7 +52,7 @@ class ServizioMessaggio:
         return True
     
     # OTTIENI CHAT GRUPPO
-    def chat_gruppo(self, id_gruppo: int) -> List[Messaggio]:
+    def chat_gruppo(self, id_gruppo: str) -> List[Messaggio]:
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
         if not gruppo:
             return[]
@@ -67,5 +67,5 @@ class ServizioMessaggio:
         return messaggi
 
     # OTTIENI I MESSAGGI DI UN UTENTE
-    def messaggi_di_utente(self, id_utente: int) -> List[Messaggio]:
+    def messaggi_di_utente(self, id_utente: str) -> List[Messaggio]:
         return self.repo_messaggi.get_by_user(id_utente)

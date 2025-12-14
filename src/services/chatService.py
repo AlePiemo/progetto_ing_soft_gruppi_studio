@@ -21,7 +21,7 @@ class ChatService:
         self.repo_messaggi = MessaggioRepository(datastore)
 
     # INVIA MESSAGGIO DI GRUPPO
-    def invia_gruppo(self, id_gruppo: int, id_mittente: int, contenuto: str) -> bool:
+    def invia_gruppo(self, id_gruppo: str, id_mittente: str, contenuto: str) -> bool:
 
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
         if not gruppo:
@@ -47,7 +47,7 @@ class ChatService:
         return True
 
     # CHAT DI GRUPPO
-    def chat_gruppo(self, id_gruppo: int) -> List[Messaggio]:
+    def chat_gruppo(self, id_gruppo: str) -> List[Messaggio]:
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
         if not gruppo:
             return []
@@ -62,7 +62,7 @@ class ChatService:
         return messaggi
 
     # MESSAGGI NON LETTI 
-    def non_letti(self, id_utente: int) -> List[Messaggio]:
+    def non_letti(self, id_utente: str) -> List[Messaggio]:
 
         tutti = []
 
@@ -81,7 +81,7 @@ class ChatService:
         return tutti
 
     # SEGNARE MESSAGGIO COME LETTO
-    def segna_letto(self, id_messaggio: int) -> bool:
+    def segna_letto(self, id_messaggio: str) -> bool:
         msg = self.repo_messaggi.get_by_id(id_messaggio)
         if not msg:
             return False
@@ -90,6 +90,6 @@ class ChatService:
         return True
 
     # ULTIMO MESSAGGIO DI UNA CHAT 
-    def ultimo_messaggio_gruppo(self, id_gruppo: int) -> Optional[Messaggio]:
+    def ultimo_messaggio_gruppo(self, id_gruppo: str) -> Optional[Messaggio]:
         chat = self.chat_gruppo(id_gruppo)
         return chat[-1] if chat else None

@@ -3,7 +3,7 @@ from datetime import datetime
 
 @dataclass
 class Cartella:
-    id: int
+    id: str
     nome: str
     dataCreazione: datetime
-    materiale_ids: list[int] = field(default_factory=list)  
+    materiale_ids: list[str] = field(default_factory=list)  

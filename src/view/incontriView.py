@@ -2,7 +2,8 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QPushButton, QListWidget, QListWidgetItem,
     QDateEdit, QTimeEdit, QLineEdit, QTextEdit,
-    QMessageBox, QInputDialog
+    QMessageBox, QInputDialog, QDialog, QFormLayout,
+    QDialogButtonBox
 )
 from PyQt6.QtCore import Qt, QDate, QTime
 from datetime import datetime
@@ -95,19 +96,35 @@ class IncontriView(QWidget):
         descrizione, ok = QInputDialog.getMultiLineText(self, "Descrizione", "Descrizione:")
         if not ok:
             return
+        
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Data e Ora Incontro")
+
+        form = QFormLayout(dlg)
 
         data_w = QDateEdit()
-        data_w.setDate(QDate.currentDate())
         data_w.setCalendarPopup(True)
-        data = data_w.date().toPyDate()
+        data_w.setDate(QDate.currentDate())
 
         ora_w = QTimeEdit()
         ora_w.setTime(QTime.currentTime())
 
-        ora = datetime.combine(datetime.today(), ora_w.time().toPyTime())
+        form.addRow("Data:", data_w)
+        form.addRow("Ora:", ora_w)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(dlg.accept)
+        buttons.rejected.connect(dlg.reject)
+        form.addRow(buttons)
+
+        if dlg.exec() != QDialog.DialogCode.Accepted:
+            return
+        
+        data = data_w.date().toPyDate()
+        ora = ora_w.time().toPyTime()
 
         data_dt = datetime.combine(data, datetime.min.time())
-        ora_dt = datetime.combine(datetime.today(), ora.time())
+        ora_dt = datetime.combine(data, ora)
 
         nuovo = self.incontro_ctrl.crea_incontro(
             id_gruppo=self.gruppo_attuale.id,
@@ -131,7 +148,6 @@ class IncontriView(QWidget):
             return
 
         inc_id = item.data(Qt.ItemDataRole.UserRole)
-
         inc = self.incontro_ctrl.get_incontro(inc_id)
 
         if not inc:
@@ -139,7 +155,7 @@ class IncontriView(QWidget):
             return
 
         u = self.utente_ctrl.get_utente_attivo()
-        if u.id not in self.gruppo_attuale.amministratori:
+        if not u or u.id not in self.gruppo_attuale.amministratori:
             QMessageBox.warning(self, "Errore", "Solo gli admin possono modificare.")
             return
 
@@ -147,15 +163,50 @@ class IncontriView(QWidget):
         if not ok:
             return
 
-        nuova_descrizione, ok = QInputDialog.getMultiLineText(self, "Descrizione", "Descrizione:", text=inc.descrizione)
+        nuova_descrizione, ok = QInputDialog.getMultiLineText(
+            self, "Descrizione", "Descrizione:", text=inc.descrizione
+        )
         if not ok:
             return
+
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Modifica data e ora")
+
+        form = QFormLayout(dlg)
+
+        data_w = QDateEdit()
+        data_w.setCalendarPopup(True)
+
+        data_w.setDate(QDate(inc.dataIncontro.year, inc.dataIncontro.month, inc.dataIncontro.day))
+
+        ora_w = QTimeEdit()
+
+        ora_w.setTime(QTime(inc.oraIncontro.hour, inc.oraIncontro.minute))
+
+        form.addRow("Data:", data_w)
+        form.addRow("Ora:", ora_w)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(dlg.accept)
+        buttons.rejected.connect(dlg.reject)
+        form.addRow(buttons)
+
+        if dlg.exec() != QDialog.DialogCode.Accepted:
+            return
+
+        nuova_data = data_w.date().toPyDate()
+        nuova_ora = ora_w.time().toPyTime()
+
+        data_dt = datetime.combine(nuova_data, datetime.min.time())
+        ora_dt = datetime.combine(nuova_data, nuova_ora)
 
         ok2 = self.incontro_ctrl.modifica_incontro(
             id_incontro=inc.id,
             id_admin=u.id,
             titolo=nuovo_titolo,
-            descrizione=nuova_descrizione
+            descrizione=nuova_descrizione,
+            dataIncontro=data_dt,
+            oraIncontro=ora_dt
         )
 
         if ok2:

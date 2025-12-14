@@ -28,41 +28,39 @@ class MaterialeService:
     def carica_materiale(
         self,
         id_gruppo: str,
+        id_autore: str,
         titolo: str,
-        contenuto: str,
-        autore: int,    
-        nome_file: str,
-        dimensione: int,
-        path_file: str,
+        descrizione: str,   
+        percorso_locale: str
     ) -> Optional[Materiale]:
         
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
         if not gruppo:
             return None
         
-        if autore not in gruppo.listaUtenti:
+        if id_autore not in gruppo.listaUtenti:
             return None
         
-        if not os.path.exists(path_file):
+        if not os.path.exists(percorso_locale):
             return None
 
         id_materiale = str(uuid.uuid4())
-        nome_file = os.path.basename(path_file)
-        dimensione = os.path.getsize(path_file)
+        nome_file = os.path.basename(percorso_locale)
+        dimensione = os.path.getsize(percorso_locale)
 
         nuovo_nome = f"{id_materiale}_{nome_file}"
         percorso_salvato = os.path.join(self.cartella_materiali, nuovo_nome)
 
         # copia file 
-        with open(path_file, "rb") as src:
+        with open(percorso_locale, "rb") as src:
             with open(percorso_salvato, "wb") as dst:
                 dst.write(src.read())
 
         materiale = Materiale(
             id=id_materiale,
-            autore=autore,
+            autore=id_autore,
             titolo=titolo,
-            contenuto=contenuto,
+            contenuto=descrizione,
             nome_file=nome_file,
             path_file=percorso_salvato,
             dimensione=dimensione,
@@ -112,7 +110,7 @@ class MaterialeService:
         return True
 
     # ELIMINA MATERIALE         
-    def elimina_materiale(self, id_materiale: str, id_gruppo: str, id_admin: str) -> bool:
+    def elimina_materiale(self, id_gruppo: str, id_admin: str, id_materiale: str) -> bool:
 
         gruppo = self.repo_gruppi.get_by_id(id_gruppo)
         if not gruppo:

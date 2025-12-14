@@ -11,7 +11,7 @@ class TipoNotifica(Enum):
 
 @dataclass
 class Notifica:
-    id: int
+    id: str
     descrizione: str
     destinatario: int  
     tipo: TipoNotifica

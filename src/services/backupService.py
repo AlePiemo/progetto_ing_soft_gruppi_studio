@@ -56,7 +56,6 @@ class BackupService:
     
     # BACKUP MANUALE
     def backup_manuale(self) -> Backup:
-
         timestamp = datetime.now()
         filename = f"backup_manual_{timestamp.strftime('%Y%m%d_%H%M%S')}.pkl"
         path = os.path.join(self.cartella, filename)

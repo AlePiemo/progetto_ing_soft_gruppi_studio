@@ -5,6 +5,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt
 from datetime import datetime
 
+from model.utente import RolePlatform
+
 
 class SegnalazioniView(QWidget):
 
@@ -165,7 +167,7 @@ class SegnalazioniView(QWidget):
     def valuta_segnalazione(self):
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if not admin or admin.ruoloPiattaforma.value != "ADMIN":
+        if not admin or admin.ruoloPiattaforma != RolePlatform.ADMIN_PIATTAFORMA:
             QMessageBox.warning(self, "Errore", "Solo l'amministratore di piattaforma può valutare.")
             return
 
@@ -185,7 +187,7 @@ class SegnalazioniView(QWidget):
     def archivia_segnalazione(self):
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if not admin or admin.ruoloPiattaforma.value != "ADMIN":
+        if not admin or admin.ruoloPiattaforma != RolePlatform.ADMIN_PIATTAFORMA:
             QMessageBox.warning(self, "Errore", "Operazione non autorizzata.")
             return
 
@@ -206,7 +208,7 @@ class SegnalazioniView(QWidget):
     def applica_sanzione(self):
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if not admin or admin.ruoloPiattaforma.value != "ADMIN":
+        if not admin or admin.ruoloPiattaformaa != RolePlatform.ADMIN_PIATTAFORMA:
             QMessageBox.warning(self, "Errore", "Solo l'amministratore può applicare sanzioni.")
             return
 

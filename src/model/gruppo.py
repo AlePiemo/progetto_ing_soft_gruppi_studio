@@ -5,7 +5,7 @@ from typing import Set
 
 @dataclass
 class Gruppo:
-    id: int
+    id: str
     nomeGruppo: str
     descrizione: str
     listaUtenti: Set[str] = field(default_factory=set)          # id utenti

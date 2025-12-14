@@ -22,7 +22,7 @@ class UtenteRepository:
     def add(self, utente: Utente) -> None:
         self._ds.users[utente.id] = utente
 
-    def get_by_id(self, utente_id: int) -> Optional[Utente]:
+    def get_by_id(self, utente_id: str) -> Optional[Utente]:
         return self._ds.users.get(utente_id)
 
     def get_all(self) -> List[Utente]:
@@ -71,9 +71,6 @@ class MessaggioRepository:
     def remove(self, messaggio_id: str) -> None:
         self._ds.messages.pop(messaggio_id, None)
 
-    def get_by_group(self, gruppo_id: str) -> List[Messaggio]:
-        return [m for m in self._ds.messages.values() if m.destinatario_id == gruppo_id]
-
 #  Incontro REPOSITORY
 class IncontroRepository:
     def __init__(self, datastore: DataStore):
@@ -111,9 +108,6 @@ class MaterialeRepository:
     def remove(self, material_id: str) -> None:
         self._ds.materials.pop(material_id, None)
 
-    def get_by_group(self, gruppo_id: str) -> List[Materiale]:
-        return [m for m in self._ds.materials.values() if m.gruppo_id == gruppo_id]
-
 #  Segnalazione REPOSITORY
 class SegnalazioneRepository:
     def __init__(self, datastore: DataStore):
@@ -150,9 +144,6 @@ class NotificaRepository:
 
     def remove(self, notifica_id: str) -> None:
         self._ds.notifications.pop(notifica_id, None)
-
-    def get_by_user(self, user_id: str) -> List[Notifica]:
-        return [n for n in self._ds.notifications.values() if n.destinatario_id == user_id]
 
 #  BACKUP REPOSITORY
 class BackupRepository:
