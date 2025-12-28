@@ -105,11 +105,17 @@ class SegnalazioniView(QWidget):
 
     def format_segnalazione(self, s):
         autore = self.utente_ctrl.repo_utenti.get_by_id(s.autore)
-        autore_nome = f"{autore.nome} {autore.cognome}" if autore else "Sconosciuto"
+        autore_txt = f"{autore.nome} {autore.cognome}" if autore else "Sconosciuto"
+
+        ut_target = self.utente_ctrl.repo_utenti.get_by_id(s.destinatario)
+        if ut_target:
+            target_txt = f"segnalato: {ut_target.nome} {ut_target.cognome} ({ut_target.email})"
+        else:
+            target_txt = f"messaggio segnalato: {s.destinatario}"
 
         data = s.data.strftime("%d/%m/%Y %H:%M")
 
-        return f"{data} | Autore: {autore_nome} | Motivo: {s.motivo}"
+        return f"{data} | Autore: {autore_txt} | {target_txt} | Motivo: {s.motivo}"
 
     def segnala_utente(self):
         u = self.utente_ctrl.get_utente_attivo()
@@ -117,15 +123,15 @@ class SegnalazioniView(QWidget):
             QMessageBox.warning(self, "Errore", "effettuare login.")
             return
 
-        id_utente, ok = QInputDialog.getText(self, "Segnala utente", "segnalare:")
-        if not ok or not id_utente:
+        email_utente, ok = QInputDialog.getText(self, "Segnala utente", "email utente da segnalare:")
+        if not ok or not email_utente:
             return
 
         motivo, ok = QInputDialog.getMultiLineText(self, "Motivo", "Descrivi il motivo:")
         if not ok:
             return
 
-        s = self.segnalazione_ctrl.segnala_utente(u.id, id_utente, motivo)
+        s = self.segnalazione_ctrl.segnala_utente(u.id, email_utente, motivo)
 
         if s:
             QMessageBox.information(self, "OK", "Segnalazione inviata.")
@@ -208,7 +214,7 @@ class SegnalazioniView(QWidget):
     def applica_sanzione(self):
         admin = self.utente_ctrl.get_utente_attivo()
 
-        if not admin or admin.ruoloPiattaformaa != RolePlatform.ADMIN_PIATTAFORMA:
+        if not admin or admin.ruoloPiattaforma != RolePlatform.ADMIN_PIATTAFORMA:
             QMessageBox.warning(self, "Errore", "Solo l'amministratore può applicare sanzioni.")
             return
 

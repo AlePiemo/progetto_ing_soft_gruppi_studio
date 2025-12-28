@@ -77,6 +77,9 @@ class GruppiView(QWidget):
         ]
 
         for btn in self.admin_buttons:
+            btn.setVisible(False)
+
+        for btn in self.admin_buttons:
             right.addWidget(btn)
 
         layout.addLayout(right, 3)
@@ -102,6 +105,10 @@ class GruppiView(QWidget):
 
     # MOSTRA DETTAGLI DI UN GRUPPO
     def mostra_dettagli_gruppo(self, item):
+        if item is None:
+            self.gruppo_selezionato = None
+            self.aggiorna_permessi_admin()
+            return
         id_gruppo = item.data(Qt.ItemDataRole.UserRole)
         gruppo = self.gruppo_ctrl.get_gruppo(id_gruppo)
         self.gruppo_selezionato = gruppo
@@ -134,12 +141,12 @@ class GruppiView(QWidget):
         u = self.utente_ctrl.get_utente_attivo()
         gruppo = self.gruppo_selezionato
 
-        if not gruppo:
+        if not gruppo or u is None:
             for btn in self.admin_buttons:
                 btn.setVisible(False)
             return
 
-        is_admin = u.id in gruppo.amministratori
+        is_admin = (u.id in gruppo.amministratori)
 
         for btn in self.admin_buttons:
             btn.setVisible(is_admin)

@@ -22,16 +22,18 @@ class SegnalazioneController:
         self.service = SegnalazioneService(datastore)
 
     # CREA SEGNALAZIONE UTENTE
-    def segnala_utente(
-        self,
-        id_autore: str,
-        id_utente: str,
-        motivo: str,
-    ) -> Optional[Segnalazione]:
+    def segnala_utente(self, id_autore: str, email_utente: str, motivo: str) -> Optional[Segnalazione]:
+        email_utente = (email_utente or "").strip().lower()
+        if not email_utente:
+            return None
+
+        ut = self.repo_utenti.find_by_email(email_utente)
+        if not ut:
+            return None
 
         return self.service.segnala_utente(
             id_autore=id_autore,
-            id_utente_segnalato=id_utente,
+            id_utente_segnalato=ut.id,
             motivo=motivo
         )
 
