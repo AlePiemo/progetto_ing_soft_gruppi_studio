@@ -74,7 +74,7 @@ class IncontriView(QWidget):
             ora = inc.oraIncontro.strftime("%H:%M")
             stato = inc.statoIncontro.value
 
-            testo = f"{inc.titolo} | {data} {ora} | {stato}"
+            testo = f"{inc.titolo} \n {inc.descrizione} {data} ; {ora} \n {stato}"
 
             item = QListWidgetItem(testo)
             item.setData(Qt.ItemDataRole.UserRole, inc.id)
